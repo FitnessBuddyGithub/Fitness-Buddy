@@ -14,9 +14,9 @@ app.use((err, req, res, next) => {
 	res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 19007;
 app.listen(port, () => {
-	console.log('Running on port 8080');
+	console.log('Running on port 19007');
 });
 
 db.sync();
