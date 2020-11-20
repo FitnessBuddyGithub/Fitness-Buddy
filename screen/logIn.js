@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import isEmail from 'validator/lib/isEmail'
 
 
-
+//LOGIN
 function LogInDC(props) {
   const { register, handleSubmit, watch, errors } = useForm();
   const [value, onChangeText] = React.useState('');
