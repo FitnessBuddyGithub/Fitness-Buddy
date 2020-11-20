@@ -11,8 +11,6 @@ function LogInDC(props) {
   const { register, handleSubmit, watch, errors } = useForm();
   const [value, onChangeText] = React.useState('');
   const onSubmit = data => {
-    console.log('value here: ',value)
-    console.log('data: ',data)
     let user = {
       email: data.email,
       password: value,
@@ -24,13 +22,7 @@ function LogInDC(props) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <input name="email"
         placeholder="Email"
-        // style={{ ...styles.input, borderColor: errors.email && "red" }}
         ref={register({ required: true, validate: (input) => isEmail(input)})} />
-      {/* <TextInput name="password"
-        placeholder="Password"
-        secureTextEntry
-        // style={{ ...styles.input, borderColor: errors.password && "red" }}
-        ref={register({ required: true })} /> */}
         <TextInput
         onChangeText={text => onChangeText(text)}
         value={value} secureTextEntry={true} />
