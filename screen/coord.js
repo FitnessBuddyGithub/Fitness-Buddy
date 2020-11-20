@@ -2,16 +2,27 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { connect } from 'react-redux'
-import { updateCoord } from '../store/coord'
-
+import user from '../store/user';
+import { usersNearBy } from '../store/users'
+//coord: {{location: {
+//     type: "Point",
+//     coordinates: [
+//         logitude,
+//         latitude,
+//     ]
+// }}}
 export class CoordDC extends Component {
-
+  _isMounted = false;
   state = {
     latitude: null,
     longitude: null
   };
   componentDidMount() {
-    this.findCoordinates()
+    this._isMounted = true;
+    updateLocation(this.props.user.id)
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   findCoordinates = () => {
     navigator.geolocation.getCurrentPosition(
@@ -27,19 +38,32 @@ export class CoordDC extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };
-  //sss
+
   render() {
+    const users = this.props.users || []
     return (
       <View style={styles.container} >
+        <Button
+          title="Refresh"
+          onPress={() =>
+            this.findCoordinates()
+          }
+        />
         <TouchableOpacity onPress={this.findCoordinates}>
           <Text style={styles.welcome}>Find My Coords?</Text>
-          <Text>latitude:{this.state.latitude}</Text>
-          <Text>longitude:{this.state.longitude}</Text>
+          {users.map(user => {
+            return (
+              <View>{user.name}</View>
+            )
+          })
+          }
+          {/* <Text>latitude:{this.state.latitude}</Text>
+          <Text>longitude:{this.state.longitude}</Text> */}
         </TouchableOpacity>
         <Button
           title="Back to home"
           onPress={() =>
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('signIn')
           }
         />
       </View>
@@ -56,10 +80,16 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapState = state => {
+  return {
+    singleUser: user,
+    users: users
+  }
+}
 const mapDispatch = dispatch => {
   return {
-    updateLocation: (coord) => dispatch(updateCoord(coord))
+    updateLocation: (userId) => dispatch(usersNearBy(userId))
   }
 }
 
-export default connect(null, mapDispatch)(CoordDC)
+export default connect(mapState, mapDispatch)(CoordDC)
