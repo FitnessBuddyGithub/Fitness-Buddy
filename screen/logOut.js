@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 class logOutDC extends React.Component {
   componentDidMount() {
-    logOutUser()
+    this.props.logOutUser()
   }
   render() {
     return (
