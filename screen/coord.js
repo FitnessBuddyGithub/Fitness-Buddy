@@ -19,7 +19,7 @@ export class CoordDC extends Component {
   };
   componentDidMount() {
     this._isMounted = true;
-    updateLocation(this.props.user.id)
+    updateLocation(this.props.singleUser.id)
   }
   componentWillUnmount() {
     this._isMounted = false;
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
 
 const mapState = state => {
   return {
-    singleUser: user,
-    users: users
+    singleUser: state.user,
+    users: state.users
   }
 }
 const mapDispatch = dispatch => {

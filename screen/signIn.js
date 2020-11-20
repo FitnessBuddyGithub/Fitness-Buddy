@@ -1,23 +1,41 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-const Stack = createStackNavigator();
-import Coord from './coord'
+import { connect } from 'react-redux'
 
-function signIn({ navigation }) {
-  return (
-    <View>
-      <Text>This is Sign In page</Text>
-      <Button
-        title="Find People Near Me"
-        onPress={() => navigation.navigate('Coord')}
-      />
-      <Button
-        title="Log Out"
-        onPress={() => navigation.navigate('LogOut')}
-      />
-    </View>
-  );
+export class SignInDC extends React.Component {
+  constructor() {
+    super()
+  }
+
+  componentDidMount() {
+
+  }
+  render() {
+    return (
+      <View>
+        <Text>This is Sign In page</Text>
+        <Button
+          title="Find People Near Me"
+          onPress={() => this.props.navigation.navigate('Coord')}
+        />
+        <Button
+          title="Log Out"
+          onPress={() => this.props.navigation.navigate('LogOut')}
+        />
+      </View>
+    );
+  }
 }
 
-export default signIn;
+const mapState = state => {
+  return {
+    singleUser: state.user,
+    users: state.users
+  }
+}
+
+
+
+export default connect(mapState)(SignInDC);
+
+

@@ -13,7 +13,7 @@ export const getLocation = user => ({ type: UPDATE_LOCATION, user })
 
 export const getUser = (email, password) => async dispatch => {
   try {
-    const res = await axios.post('/heroku/auth/login', { email: email, password: password })
+    const res = await axios.post('https://fitness-buddy-backend.herokuapp.com/api/auth/login', { email: email, password: password })
     dispatch(gotUser(res.data))
   } catch (error) {
     Alert.alert('Sorry, there was a problem signing in. Please try again.');
@@ -22,7 +22,7 @@ export const getUser = (email, password) => async dispatch => {
 //user: email, password, gender
 export const registerNewUser = user => async dispatch => {
   try {
-    const { data } = await axios.post('/heroku/auth/signup', user);
+    const { data } = await axios.post('https://fitness-buddy-backend.herokuapp.com/api/auth/signup', user);
     dispatch(gotUser(data));
   } catch (err) {
     console.log(err.message);
@@ -30,7 +30,7 @@ export const registerNewUser = user => async dispatch => {
 }
 export const removeUser = () => async dispatch => {
   try {
-    await axios.post('auth/logout')
+    await axios.post('https://fitness-buddy-backend.herokuapp.com/api/auth/logout')
     dispatch(remove())
     history.push('/login')
   } catch (err) {

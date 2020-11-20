@@ -1,15 +1,26 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-const Stack = createStackNavigator();
+import { removeUser } from '../store/user'
+import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { connect } from 'react-redux'
 
-
-function logOut(props) {
-  return (
-    <View>
-      <Text>You have successfully logged out</Text>
-    </View>
-  );
+class logOutDC extends React.Component {
+  componentDidMount() {
+    logOutUser()
+  }
+  render() {
+    return (
+      <View>
+        <Text>You have successfully logged out</Text>
+      </View>
+    );
+  }
 }
 
-export default logOut;
+
+const mapDispatch = dispatch => {
+  return {
+    logOutUser: () => dispatch(removeUser())
+  }
+}
+
+export default connect(null, mapDispatch)(logOutDC);

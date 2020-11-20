@@ -1,6 +1,5 @@
 import { Alert } from 'react-native';
 import axios from 'axios'
-import { noExtendLeft } from 'sequelize/types/lib/operators';
 
 const GOT_USERS = 'GOT_USERS'
 
@@ -19,8 +18,8 @@ export const gotUsers = users => ({ type: GOT_USERS, users })
 // }}}
 export const usersNearBy = (id, coord) => async dispatch => {
   try {
-    await axios.put(`/heroku/users/${id}/location`, coord)
-    const { data } = await axios.get(`/heroku/users/${id}/nearby`)
+    await axios.put(`https://fitness-buddy-backend.herokuapp.com/api/users/${id}/location`, coord)
+    const { data } = await axios.get(`https://fitness-buddy-backend.herokuapp.com/api/users/${id}/nearby`)
     dispatch(gotUsers(data))
   } catch (err) {
     console.log(err.message)
