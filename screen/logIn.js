@@ -13,15 +13,8 @@ function LogInDC(props) {
 
   const onSubmit = async data => {
     try {
-      let user = {
-        email: data.email,
-        password: value,
-      }
-      console.log('before', props,)
       await props.getLoggedInUser(data.email, value)
-
       const state = store.getState();
-      console.log('is get state better', state)
       if (!state.singleUser.error) {
         props.navigation.navigate('Welcome')
       } else {

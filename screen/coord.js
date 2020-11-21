@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { connect } from 'react-redux'
 import { usersNearBy } from '../store/users'
+import store from '../store'
 
 export class CoordDC extends Component {
   _isMounted = false;
   constructor() {
     super()
-    state = {
+    this.state = {
       latitude: null,
       longitude: null
     };
@@ -29,6 +30,7 @@ export class CoordDC extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         })
+        console.log('is the state updated? in find coordinates', this.state)
       },
       error => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -36,7 +38,20 @@ export class CoordDC extends Component {
   };
   updateLocation = () => {
     try {
-      this.findCoordinates()
+      // await this.findCoordinates()
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          console.log(position)
+          this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          })
+          console.log('is the state updated? in find coordinates', this.state)
+        },
+        error => Alert.alert(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      );
+
       let coord = {
         location: {
           type: "Point",
@@ -46,7 +61,12 @@ export class CoordDC extends Component {
           ]
         }
       }
-      this.props.updateLocthunk(this.props.singleUser.id, coord)
+      console.log('coord is', coord)
+      const storeState = store.getState();
+      // console.log('state', state)
+      // console.log('props', this.props)
+      // console.log('singleuser', this.props.singleUser)
+      this.props.updateLocthunk(storeState.singleUser.user.id, coord)
     } catch (err) {
       console.log(err)
     }
@@ -91,16 +111,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapState = state => {
-  return {
-    singleUser: state.user,
-    users: state.users
-  }
-}
+// const mapState = state => {
+//   return {
+//     singleUser: state.user,
+//     users: state.users
+//   }
+// }
 const mapDispatch = dispatch => {
   return {
     updateLocthunk: (userId, coord) => dispatch(usersNearBy(userId, coord))
   }
 }
 
-export default connect(mapState, mapDispatch)(CoordDC)
+export default connect(null, mapDispatch)(CoordDC)

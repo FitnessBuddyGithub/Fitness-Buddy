@@ -8,7 +8,7 @@ function WelcomePage(props) {
       <Text>Welcome!</Text>
       <Button
         title="Find People Nearby"
-        onPress={() => navigation.navigate('Coord')}
+        onPress={() => props.navigation.navigate('Coord')}
       />
     </View>
   );
