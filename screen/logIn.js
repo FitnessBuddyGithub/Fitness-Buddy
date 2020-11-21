@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { getUser } from '../store/user'
 import { connect } from 'react-redux'
 import isEmail from 'validator/lib/isEmail'
-
+import store from '../store'
 
 //LOGIN
 function LogInDC(props) {
@@ -17,12 +17,16 @@ function LogInDC(props) {
         email: data.email,
         password: value,
       }
-      console.log('before', props)
+      console.log('before', props,)
       await props.getLoggedInUser(data.email, value)
-      // if (props.isLoggedIn) {
-      //   props.navigation.navigate('Welcome')
-      // }
-      console.log('after', props)
+
+      const state = store.getState();
+      console.log('is get state better', state)
+      if (!state.singleUser.error) {
+        props.navigation.navigate('Welcome')
+      } else {
+        state.singleUser.error = false
+      }
     } catch (err) {
       console.log(err)
     }
@@ -39,13 +43,14 @@ function LogInDC(props) {
     </form>
   );
 }
-const mapState = state => {
-  return {
-    user: state.singleUser.user,
-    users: state.users
-  }
-}
+// const mapState = (state) => {
+//   return {
+//     // user: state.singleUser.user,
+//     // error: state.singleUser.error,
+//     // users: state.users,
+//   }
+// }
 const mapDispatch = dispatch => ({
   getLoggedInUser: (email, password) => dispatch(getUser(email, password)),
 })
-export default connect(mapState, mapDispatch)(LogInDC);
+export default connect(null, mapDispatch)(LogInDC);

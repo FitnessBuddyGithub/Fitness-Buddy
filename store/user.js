@@ -4,25 +4,23 @@ import { useHistory } from "react-router-dom"
 const GOT_USER = 'GOT_USER'
 const REMOVE_USER = "REMOVE-USER"
 const UPDATE_LOCATION = 'UPDATE_LOCATION'
-const UPDATE_USER = 'UPDATE_USER'
+const ERROR_LOGIN = 'ERROR_LOGIN'
 export const gotUser = user => ({ type: GOT_USER, user })
 
 export const remove = () => ({ type: REMOVE_USER })
 
 export const getLocation = user => ({ type: UPDATE_LOCATION, user })
+export const errorLogin = err => ({ type: ERROR_LOGIN, err })
 
-export const updateUser = () => ({
-  type: UPDATE_USER
-})
 
 export const getUser = (email, password) => async dispatch => {
   let res
   try {
     res = await axios.post('https://fitness-buddy-backend.herokuapp.com/auth/login', { email: email, password: password })
     dispatch(gotUser(res.data))
-    dispatch(updateUser())
-  } catch (error) {
-    Alert.alert('Sorry, there was a problem signing in. Please try again.');
+  } catch (err) {
+    console.log(err)
+    dispatch(errorLogin(err.message))
   }
 }
 //user: email, password, gender
@@ -46,7 +44,8 @@ export const removeUser = () => async dispatch => {
 
 
 let initalState = {
-  user: {}
+  user: {},
+  error: false
 }
 export default function (state = initalState, action) {
   switch (action.type) {
@@ -54,6 +53,8 @@ export default function (state = initalState, action) {
       return { ...state, user: action.user };
     case REMOVE_USER:
       return initalState;
+    case ERROR_LOGIN:
+      return { ...state, error: true }
     default:
       return state;
   }
