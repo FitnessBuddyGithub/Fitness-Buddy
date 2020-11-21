@@ -16,7 +16,7 @@ function WelcomePage(props) {
 
 const mapState = state => {
   return {
-    singleUser: state.user,
+    singleUser: state.singleUser.user,
     users: state.users
   }
 }
