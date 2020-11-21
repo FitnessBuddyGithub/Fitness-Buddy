@@ -13,7 +13,7 @@ export class CoordDC extends Component {
       latitude: null,
       longitude: null
     };
-    this.findCoordinates = this.findCoordinates.bind(this)
+    // this.findCoordinates = this.findCoordinates.bind(this)
     this.updateLocation = this.updateLocation.bind(this)
   }
   componentDidMount() {
@@ -22,35 +22,40 @@ export class CoordDC extends Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-  findCoordinates = () => {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        console.log(position)
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        })
-        console.log('is the state updated? in find coordinates', this.state)
-      },
-      error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
-  };
+
+  // findCoordinates = () => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     position => {
+  //       console.log(position)
+  //       this.setState({
+  //         latitude: position.coords.latitude,
+  //         longitude: position.coords.longitude,
+  //       })
+  //       console.log('is the state updated? in find coordinates', this.state)
+  //     },
+  //     error => Alert.alert(error.message),
+  //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+  //   );
+  // };
+
   updateLocation = () => {
     try {
       // await this.findCoordinates()
       navigator.geolocation.getCurrentPosition(
         position => {
-          console.log(position)
+          // console.log(position)
           this.setState({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           })
-          console.log('is the state updated? in find coordinates', this.state)
-        },
-        error => Alert.alert(error.message),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+          // console.log('is the state updated? in find coordinates', this.state)
+        }
+
+        //,error => Alert.alert(error.message),
+        // { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
       );
+        console.log('state longitude: ',this.state.longitude)
+        console.log('state latitude: ',this.state.latitude)
 
       let coord = {
         location: {
@@ -61,7 +66,7 @@ export class CoordDC extends Component {
           ]
         }
       }
-      console.log('coord is', coord)
+      // console.log('coord is', coord)
       const storeState = store.getState();
       // console.log('state', state)
       // console.log('props', this.props)
