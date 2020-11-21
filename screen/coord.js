@@ -9,15 +9,19 @@ export class CoordDC extends Component {
   _isMounted = false;
   constructor() {
     super()
+    const storeState = store.getState();
     this.state = {
       latitude: null,
-      longitude: null
+      longitude: null,
+      store: storeState
     };
+    console.log('props', this.props)
     this.findCoordinates = this.findCoordinates.bind(this)
     this.updateLocation = this.updateLocation.bind(this)
   }
   componentDidMount() {
     this._isMounted = true;
+
   }
   componentWillUnmount() {
     this._isMounted = false;
@@ -25,7 +29,6 @@ export class CoordDC extends Component {
   findCoordinates = () => {
     navigator.geolocation.getCurrentPosition(
       position => {
-        console.log(position)
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -36,22 +39,10 @@ export class CoordDC extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };
-  updateLocation = () => {
+  updateLocation = async () => {
     try {
-      // await this.findCoordinates()
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          console.log(position)
-          this.setState({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          })
-          console.log('is the state updated? in find coordinates', this.state)
-        },
-        error => Alert.alert(error.message),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-      );
-
+      await this.findCoordinates()
+      console.log('what is state?? ', this.state)
       let coord = {
         location: {
           type: "Point",
@@ -62,11 +53,11 @@ export class CoordDC extends Component {
         }
       }
       console.log('coord is', coord)
-      const storeState = store.getState();
+
       // console.log('state', state)
       // console.log('props', this.props)
       // console.log('singleuser', this.props.singleUser)
-      this.props.updateLocthunk(storeState.singleUser.user.id, coord)
+      this.props.updateLocthunk(this.state.store.singleUser.user.id, coord)
     } catch (err) {
       console.log(err)
     }
@@ -74,27 +65,37 @@ export class CoordDC extends Component {
   }
   render() {
     const users = this.props.users || []
+    console.log('mapstate users', this.props.users)
     return (
       <View style={styles.container} >
         <Button
           title="Refresh"
-          onPress={() =>
-            this.updateLocation()
-          }
+          onPress={this.updateLocation}
         />
-        <TouchableOpacity onPress={this.updateLocation}>
-          <Text style={styles.welcome}>Find My Coords?</Text>
-          {users.map(user => {
-            return (
-              <View>{user.name}</View>
-            )
-          })
-          }
-        </TouchableOpacity>
+        {users.length < 1
+          ? <Text>There are no users close to you</Text>
+          :
+          <Text style={styles.welcome}>
+            {users.map(user => {
+              return (
+                <View key={user.id}>
+                  <Text >{user.email}</Text>
+                  <Text>{user.gender}</Text>
+                  <Text>His/her longitude: {user.location.coordinates[0]}</Text>
+                  <Text>His/her latitude: {user.location.coordinates[1]}</Text>
+                </View>
+              )
+            })
+            }
+          </Text>
+        }
+
+
+
         <Button
           title="Back to home"
           onPress={() =>
-            this.props.navigation.navigate('signIn')
+            this.props.navigation.navigate('Welcome')
           }
         />
       </View>
@@ -111,16 +112,16 @@ const styles = StyleSheet.create({
   },
 });
 
-// const mapState = state => {
-//   return {
-//     singleUser: state.user,
-//     users: state.users
-//   }
-// }
+const mapState = state => {
+  return {
+    // singleUser: state.singleUser.user,
+    users: state.users
+  }
+}
 const mapDispatch = dispatch => {
   return {
     updateLocthunk: (userId, coord) => dispatch(usersNearBy(userId, coord))
   }
 }
 
-export default connect(null, mapDispatch)(CoordDC)
+export default connect(mapState, mapDispatch)(CoordDC)

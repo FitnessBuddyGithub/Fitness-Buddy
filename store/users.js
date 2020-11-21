@@ -1,9 +1,8 @@
 import { Alert } from 'react-native';
 import axios from 'axios'
-
+import { gotUser } from './user'
 const GOT_USERS = 'GOT_USERS'
 
-export const gotUser = user => ({ type: GOT_USER, user })
 
 export const remove = () => ({ type: REMOVE_USERS })
 
@@ -19,7 +18,8 @@ export const gotUsers = users => ({ type: GOT_USERS, users })
 
 export const usersNearBy = (id, coord) => async dispatch => {
   try {
-    await axios.put(`https://fitness-buddy-backend.herokuapp.com/api/users/${id}/location`, coord)
+    const res = await axios.put(`https://fitness-buddy-backend.herokuapp.com/api/users/${id}/location`, coord)
+    dispatch(gotUser(res.data))
     const { data } = await axios.get(`https://fitness-buddy-backend.herokuapp.com/api/users/${id}/nearby`)
     dispatch(gotUsers(data))
   } catch (err) {
