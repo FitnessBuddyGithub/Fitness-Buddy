@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-const Stack = createStackNavigator();
+
 
 export default function HomeScreen({ navigation }) {
   return (
