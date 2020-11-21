@@ -2,24 +2,21 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { connect } from 'react-redux'
-import user from '../store/user';
 import { usersNearBy } from '../store/users'
-//coord: {{location: {
-//     type: "Point",
-//     coordinates: [
-//         logitude,
-//         latitude,
-//     ]
-// }}}
+
 export class CoordDC extends Component {
   _isMounted = false;
-  state = {
-    latitude: null,
-    longitude: null
-  };
+  constructor() {
+    super()
+    state = {
+      latitude: null,
+      longitude: null
+    };
+    this.findCoordinates = this.findCoordinates.bind(this)
+    this.updateLocation = this.updateLocation.bind(this)
+  }
   componentDidMount() {
     this._isMounted = true;
-    updateLocation(this.props.singleUser.id)
   }
   componentWillUnmount() {
     this._isMounted = false;
@@ -32,13 +29,29 @@ export class CoordDC extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         })
-        const location = JSON.stringify(position);
       },
       error => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };
+  updateLocation = () => {
+    try {
+      this.findCoordinates()
+      let coord = {
+        location: {
+          type: "Point",
+          coordinates: [
+            this.state.longitude,
+            this.state.latitude
+          ]
+        }
+      }
+      this.props.updateLocthunk(this.props.singleUser.id, coord)
+    } catch (err) {
+      console.log(err)
+    }
 
+  }
   render() {
     const users = this.props.users || []
     return (
@@ -46,10 +59,10 @@ export class CoordDC extends Component {
         <Button
           title="Refresh"
           onPress={() =>
-            this.findCoordinates()
+            this.updateLocation()
           }
         />
-        <TouchableOpacity onPress={this.findCoordinates}>
+        <TouchableOpacity onPress={this.updateLocation}>
           <Text style={styles.welcome}>Find My Coords?</Text>
           {users.map(user => {
             return (
@@ -57,8 +70,6 @@ export class CoordDC extends Component {
             )
           })
           }
-          {/* <Text>latitude:{this.state.latitude}</Text>
-          <Text>longitude:{this.state.longitude}</Text> */}
         </TouchableOpacity>
         <Button
           title="Back to home"
@@ -88,7 +99,7 @@ const mapState = state => {
 }
 const mapDispatch = dispatch => {
   return {
-    updateLocation: (userId) => dispatch(usersNearBy(userId))
+    updateLocthunk: (userId, coord) => dispatch(usersNearBy(userId, coord))
   }
 }
 

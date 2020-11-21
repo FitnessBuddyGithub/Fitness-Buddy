@@ -9,13 +9,14 @@ export const remove = () => ({ type: REMOVE_USERS })
 
 export const gotUsers = users => ({ type: GOT_USERS, users })
 
-//coord: {{location: {
+//coord: {location: {
 //     type: "Point",
 //     coordinates: [
 //         logitude,
 //         latitude,
 //     ]
-// }}}
+// }}
+
 export const usersNearBy = (id, coord) => async dispatch => {
   try {
     await axios.put(`https://fitness-buddy-backend.herokuapp.com/api/users/${id}/location`, coord)

@@ -7,6 +7,7 @@ import Coord from './coord'
 import LogIn from './logIn'
 import LogOut from './logOut'
 import SignUp from './signUp'
+import WelcomePage from './welcome'
 const Stack = createStackNavigator();
 
 export default function Home() {
@@ -32,6 +33,10 @@ export default function Home() {
         <Stack.Screen
           name="LogOut"
           component={LogOut}
+        />
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomePage}
         />
       </Stack.Navigator>
     </NavigationContainer>

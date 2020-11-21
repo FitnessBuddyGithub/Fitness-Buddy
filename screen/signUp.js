@@ -74,4 +74,6 @@ const styles = StyleSheet.create({
 const mapDispatch = dispatch => ({
   newUser: (user) => dispatch(registerNewUser(user))
 })
+
+
 export default connect(null, mapDispatch)(SignUpDC);
