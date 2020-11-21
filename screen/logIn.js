@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
-import {useForm} from 'react-hook-form'
-import {getUser} from '../store/user'
+import { useForm } from 'react-hook-form'
+import { getUser } from '../store/user'
 import { connect } from 'react-redux'
 import isEmail from 'validator/lib/isEmail'
 
@@ -10,28 +10,42 @@ import isEmail from 'validator/lib/isEmail'
 function LogInDC(props) {
   const { register, handleSubmit, watch, errors } = useForm();
   const [value, onChangeText] = React.useState('');
-  const onSubmit = data => {
-    let user = {
-      email: data.email,
-      password: value,
+
+  const onSubmit = async data => {
+    try {
+      let user = {
+        email: data.email,
+        password: value,
+      }
+      console.log('before', props)
+      await props.getLoggedInUser(data.email, value)
+      // if (props.isLoggedIn) {
+      //   props.navigation.navigate('Welcome')
+      // }
+      console.log('after', props)
+    } catch (err) {
+      console.log(err)
     }
-    console.log(user)
-    props.getLoggedInUser( data.email, value)
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input name="email"
         placeholder="Email"
-        ref={register({ required: true, validate: (input) => isEmail(input)})} />
-        <TextInput
+        ref={register({ required: true, validate: (input) => isEmail(input) })} />
+      <TextInput
         onChangeText={text => onChangeText(text)}
         value={value} secureTextEntry={true} />
       <input type="submit" />
     </form>
   );
 }
-
+const mapState = state => {
+  return {
+    user: state.singleUser.user,
+    users: state.users
+  }
+}
 const mapDispatch = dispatch => ({
-  getLoggedInUser: (email, password) => dispatch(getUser(email, password))
+  getLoggedInUser: (email, password) => dispatch(getUser(email, password)),
 })
-export default connect(null, mapDispatch)(LogInDC);
+export default connect(mapState, mapDispatch)(LogInDC);

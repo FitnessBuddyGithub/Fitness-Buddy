@@ -1,20 +1,26 @@
 import { Alert } from 'react-native';
 import axios from 'axios'
-
+import { useHistory } from "react-router-dom"
 const GOT_USER = 'GOT_USER'
 const REMOVE_USER = "REMOVE-USER"
 const UPDATE_LOCATION = 'UPDATE_LOCATION'
-
+const UPDATE_USER = 'UPDATE_USER'
 export const gotUser = user => ({ type: GOT_USER, user })
 
 export const remove = () => ({ type: REMOVE_USER })
 
 export const getLocation = user => ({ type: UPDATE_LOCATION, user })
 
+export const updateUser = () => ({
+  type: UPDATE_USER
+})
+
 export const getUser = (email, password) => async dispatch => {
+  let res
   try {
-    const res = await axios.post('https://fitness-buddy-backend.herokuapp.com/auth/login', { email: email, password: password })
+    res = await axios.post('https://fitness-buddy-backend.herokuapp.com/auth/login', { email: email, password: password })
     dispatch(gotUser(res.data))
+    dispatch(updateUser())
   } catch (error) {
     Alert.alert('Sorry, there was a problem signing in. Please try again.');
   }
@@ -39,13 +45,15 @@ export const removeUser = () => async dispatch => {
 }
 
 
-let initalState = {}
+let initalState = {
+  user: {}
+}
 export default function (state = initalState, action) {
   switch (action.type) {
     case GOT_USER:
-      return action.user;
+      return { ...state, user: action.user };
     case REMOVE_USER:
-      return {};
+      return initalState;
     default:
       return state;
   }

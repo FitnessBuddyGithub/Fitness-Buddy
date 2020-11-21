@@ -6,8 +6,8 @@ import user from './user'
 import users from './users'
 
 const reducer = combineReducers({
-  user,
-  users
+  singleUser: user,
+  users: users
 })
 
 const middleware = composeWithDevTools(
@@ -16,4 +16,5 @@ const middleware = composeWithDevTools(
 const store = createStore(reducer, middleware)
 
 export default store
+
 

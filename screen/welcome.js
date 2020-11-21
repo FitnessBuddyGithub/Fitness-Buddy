@@ -5,7 +5,11 @@ import { connect } from 'react-redux'
 function WelcomePage(props) {
   return (
     <View>
-      Welcome!
+      <Text>Welcome!</Text>
+      <Button
+        title="Find People Nearby"
+        onPress={() => navigation.navigate('Coord')}
+      />
     </View>
   );
 }
