@@ -45,5 +45,13 @@ export default StyleSheet.create({
 		color: '#8688BC',
 		fontWeight: 'bold',
 		fontSize: 16
-	}
+	},
+	headline: {
+		marginTop: 10,
+		color: 'white',
+		fontSize: 26,
+		textAlign: 'center',
+		fontWeight: '500',
+		marginBottom: 20
+	},
 });

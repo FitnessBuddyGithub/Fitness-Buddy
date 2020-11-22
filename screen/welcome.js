@@ -1,39 +1,39 @@
-import {Alert, View, Text, Button, StyleSheet, input } from 'react-native';
+import { Alert, View, Text, Button, StyleSheet, input } from 'react-native';
 import React from 'react';
 import { connect } from 'react-redux'
-import {removeUser} from '../store/user'
+import { removeUser } from '../store/user'
 import firebaseSvc from '../FirebaseSvc';
-
+import styles from './styles';
 
 function WelcomePage(props) {
   const createLogoutAlert = () => {
-		Alert.alert('Are you sure you want to log out?', null, [
-			{
-				text: 'OK',
-				onPress:() => {
-        //  await props.logOutUser()
-					return firebaseSvc
-						.auth()
-						.signOut()
-						.then(() => {
-							console.log('You are signed out');
-						});
-				}
-			},
-			{
-				text: 'Cancel',
-				onPress: () => console.log('false alarm!')
-			}
-		]);
-	};
+    Alert.alert('Are you sure you want to log out?', null, [
+      {
+        text: 'OK',
+        onPress: () => {
+          //  await props.logOutUser()
+          return firebaseSvc
+            .auth()
+            .signOut()
+            .then(() => {
+              console.log('You are signed out');
+            });
+        }
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('false alarm!')
+      }
+    ]);
+  };
   return (
-    <View>
-      <Text>Welcome!</Text>
-      <Button
+    <View style={styles.container}>
+      <Text style={styles.headline}>Welcome!</Text>
+      <Button style={styles.button}
         title="Find People Nearby"
         onPress={() => props.navigation.navigate('Coord')}
       />
-      <Button
+      <Button style={styles.button}
         title="Log Out"
         onPress={() => createLogoutAlert()}
       />
@@ -59,4 +59,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState,mapDispatch)(WelcomePage)
+export default connect(mapState, mapDispatch)(WelcomePage)

@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import firebaseSDK from '../FirebaseSvc';
 import { registerNewUser } from '../store/user';
 import { connect } from 'react-redux';
+import styles from './styles';
 
 function SignUp(props) {
   const [email, setEmail] = useState('');
@@ -41,12 +42,12 @@ function SignUp(props) {
 
   return (
 
-    <View >
+    <View style={styles.container}>
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps='always'>
         <View>
           <TextInput
-
+            style={styles.input}
             placeholder='Email'
             placeholderTextColor='#aaaaaa'
             onChangeText={text => setEmail(text)}
@@ -55,7 +56,7 @@ function SignUp(props) {
             autoCapitalize='none'
           />
           <TextInput
-
+            style={styles.input}
             placeholderTextColor='#aaaaaa'
             secureTextEntry
             placeholder='Password'
@@ -74,15 +75,15 @@ function SignUp(props) {
             autoCapitalize='none'
           /> */}
 
-          <TouchableOpacity onPress={() => onRegisterPress()} >
+          <TouchableOpacity style={styles.button} onPress={() => onRegisterPress()} >
             <View>
               <Text >SIGN UP</Text>
             </View>
           </TouchableOpacity>
-          <View>
-            <Text>
+          <View style={styles.footerView}>
+            <Text style={styles.footerText}>
               Already have an account?{' '}
-              <Text onPress={onFooterLinkPress} >
+              <Text onPress={onFooterLinkPress} style={styles.footerLink}>
                 Log in
 							</Text>
             </Text>
