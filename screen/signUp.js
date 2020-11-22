@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 function SignUp(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
   const [gender, setGender] = useState('female')
   const onFooterLinkPress = () => {
     props.navigation.navigate('LogIn');
@@ -16,10 +16,10 @@ function SignUp(props) {
 
   const onRegisterPress = () => {
     Keyboard.dismiss();
-    if (password !== confirmPassword) {
-      Alert.alert("Passwords don't match. Please try again!");
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   Alert.alert("Passwords don't match. Please try again!");
+    //   return;
+    // }
     firebaseSDK
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -40,6 +40,7 @@ function SignUp(props) {
   };
 
   return (
+
     <View >
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps='always'>
@@ -63,8 +64,7 @@ function SignUp(props) {
             underlineColorAndroid='transparent'
             autoCapitalize='none'
           />
-          <TextInput
-
+          {/* <TextInput
             placeholderTextColor='#aaaaaa'
             secureTextEntry
             placeholder='Confirm Password'
@@ -72,11 +72,8 @@ function SignUp(props) {
             value={confirmPassword}
             underlineColorAndroid='transparent'
             autoCapitalize='none'
-          />
-          <select onChange={(event) => { setGender(event.target.value) }}>
-            <option value="female">female</option>
-            <option value='male'>male</option>
-          </select>
+          /> */}
+
           <TouchableOpacity onPress={() => onRegisterPress()} >
             <View>
               <Text >SIGN UP</Text>

@@ -8,6 +8,7 @@ import Coord from './coord'
 import LogIn from './logIn'
 import LogOut from './logOut'
 import SignUp from './signUp'
+import Chat from './chat'
 import WelcomePage from './welcome'
 const Stack = createStackNavigator();
 
@@ -40,10 +41,10 @@ export default function Home() {
           component={WelcomePage}
         />
 
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Chat"
           component={Chat}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

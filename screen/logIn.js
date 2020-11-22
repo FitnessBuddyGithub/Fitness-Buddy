@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import firebaseSDK from '../FirebaseSvc';
 import { getUser } from '../store/user';
 import { connect } from 'react-redux';
-// import styles from './styles';
+import styles from './styles';
 
 function LoginScreen(props) {
   const [email, setEmail] = useState('');
@@ -32,12 +32,11 @@ function LoginScreen(props) {
   };
 
   return (
-    <View >
+    <View style={styles.container}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps='always'>
         <TextInput
-
+          style={styles.input}
           placeholder='Email'
           placeholderTextColor='#aaaaaa'
           onChangeText={text => setEmail(text)}
@@ -46,7 +45,7 @@ function LoginScreen(props) {
           autoCapitalize='none'
         />
         <TextInput
-
+          style={styles.input}
           placeholderTextColor='#aaaaaa'
           secureTextEntry
           placeholder='Password'
@@ -55,16 +54,16 @@ function LoginScreen(props) {
           underlineColorAndroid='transparent'
           autoCapitalize='none'
         />
-        <TouchableOpacity onPress={() => onLoginPress()} >
+        <TouchableOpacity style={styles.button} onPress={() => onLoginPress()} >
           <View>
             <Text >LOG IN</Text>
           </View>
         </TouchableOpacity>
 
-        <View >
-          <Text >
+        <View style={styles.footerView} >
+          <Text  style={styles.footerText} >
             Don't have an account?{' '}
-            <Text onPress={onFooterLinkPress}>
+            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
               Sign up
 						</Text>
           </Text>

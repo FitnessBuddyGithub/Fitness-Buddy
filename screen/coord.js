@@ -83,7 +83,11 @@ export class CoordDC extends Component {
                   <Text>{user.gender}</Text>
                   <Text>His/her longitude: {user.location.coordinates[0]}</Text>
                   <Text>His/her latitude: {user.location.coordinates[1]}</Text>
+                  <Button
+                  title="Click to Chat!"
+                  onPress={()=>{this.props.navigation.navigate('Chat')}} />
                 </View>
+
               )
             })
             }
