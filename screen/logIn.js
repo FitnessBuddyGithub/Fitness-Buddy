@@ -15,16 +15,17 @@ function LoginScreen(props) {
   };
 
   const onLoginPress = () => {
+
     Keyboard.dismiss();
     firebaseSDK
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(async () => {
         console.log('email', email)
-        console.log('password: ', password)
-        await props.gotUser(email, password);
+        await props.gotUser();
         props.navigation.navigate('Welcome');
       })
+
       .catch(() => {
         alert('Your email or password is incorrect. Please try again!');
       });
@@ -78,7 +79,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  gotUser: (email, password) => dispatch(getUser(email, password))
+  gotUser: () => dispatch(getUser())
 });
 
 export default connect(mapState, mapDispatch)(LoginScreen);

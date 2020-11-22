@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import axios from 'axios'
 import { gotUser } from './user'
-
+const GOT_USERS = 'GOT_USERS'
 export const remove = () => ({ type: REMOVE_USERS })
 
 export const gotUsers = users => ({ type: GOT_USERS, users })
