@@ -1,72 +1,84 @@
-import React, {Component} from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-import { useForm } from 'react-hook-form'
-import { getUser } from '../store/user'
-import { connect } from 'react-redux'
-import isEmail from 'validator/lib/isEmail'
-import store from '../store'
+import React, { useState } from 'react';
+import { Text, TextInput, View, Alert, Keyboard, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import firebaseSDK from '../FirebaseSvc';
+import { getUser } from '../store/user';
+import { connect } from 'react-redux';
+// import styles from './styles';
 
-class LogIn extends Component {
-  render(){
-    return (
-      <View>
-      {(this.props.isLoggedIn!==undefined) ?
-      (<LogInDC isLoggedIn={this.props.isLoggedIn} getLoggedInUser={this.props.getLoggedInUser} navigation = {this.props.navigation} error={this.props.error} />) :
-      <Text>loading</Text>
-      }
-      </View>
+function LoginScreen(props) {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-    )
-  }
+	const onFooterLinkPress = () => {
+		props.navigation.navigate('SignUp');
+	};
+
+	const onLoginPress = () => {
+		Keyboard.dismiss();
+		firebaseSDK
+			.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then(async () => {
+        console.log('email', email)
+        console.log('password: ', password)
+				await props.gotUser(email, password);
+				props.navigation.navigate('Welcome');
+			})
+			.catch(() => {
+				alert('Your email or password is incorrect. Please try again!');
+			});
+	};
+
+	return (
+		<View >
+			<KeyboardAwareScrollView
+				style={{ flex: 1, width: '100%' }}
+				keyboardShouldPersistTaps='always'>
+				<TextInput
+
+					placeholder='Email'
+					placeholderTextColor='#aaaaaa'
+					onChangeText={text => setEmail(text)}
+					value={email}
+					underlineColorAndroid='transparent'
+					autoCapitalize='none'
+				/>
+				<TextInput
+
+					placeholderTextColor='#aaaaaa'
+					secureTextEntry
+					placeholder='Password'
+					onChangeText={text => setPassword(text)}
+					value={password}
+					underlineColorAndroid='transparent'
+					autoCapitalize='none'
+				/>
+        <TouchableOpacity onPress={() => onLoginPress()} >
+			  <View>
+				<Text >LOG IN</Text>
+			</View>
+		  </TouchableOpacity>
+
+				<View >
+					<Text >
+						Don't have an account?{' '}
+						<Text onPress={onFooterLinkPress}>
+							Sign up
+						</Text>
+					</Text>
+				</View>
+			</KeyboardAwareScrollView>
+		</View>
+	);
 }
 
-//LOGIN
-function LogInDC(props) {
-  const { register, handleSubmit, watch, errors } = useForm();
-  const [value, onChangeText] = React.useState('');
-  // console.log('function props: ', props)
-  const onSubmit = async data => {
-    try {
-      console.log('error before: ',props.error)
-      await props.getLoggedInUser(data.email, value)
-      console.log('error after: ',props.error)
+const mapState = state => ({
+	user: state.singleUser
+});
 
-      // console.log('login indicator', props.isLoggedIn)
-      // if (props.isLoggedIn) {
-      //   props.navigation.navigate('Welcome')
-      // } else{
-      //   alert('username or password is incorrect')
-      // }
-      if (props.error){
-        alert('username or password is incorrect')
-      }
-      else{
-        props.navigation.navigate('Welcome')
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  };
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input name="email"
-        placeholder="Email"
-        ref={register({ required: true, validate: (input) => isEmail(input) })} />
-      <TextInput
-        onChangeText={text => onChangeText(text)}
-        value={value} secureTextEntry={true} />
-      <input type="submit" />
-    </form>
-  );
-}
-const mapState = (state) => {
-  return {
-    isLoggedIn: !!state.singleUser.user.id,
-    user: state.singleUser.user,
-    error: state.singleUser.error
-  }
-}
 const mapDispatch = dispatch => ({
-  getLoggedInUser: (email, password) => dispatch(getUser(email, password)),
-})
-export default connect(mapState, mapDispatch)(LogIn);
+	gotUser: (email, password) => dispatch(getUser(email,password))
+});
+
+export default connect(mapState, mapDispatch)(LoginScreen);

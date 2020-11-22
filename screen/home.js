@@ -39,6 +39,11 @@ export default function Home() {
           name="Welcome"
           component={WelcomePage}
         />
+
+        {/* <Stack.Screen
+          name="Chat"
+          component={Chat}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
