@@ -57,7 +57,7 @@ export class CoordDC extends Component {
       // console.log('state', state)
       // console.log('props', this.props)
       // console.log('singleuser', this.props.singleUser)
-      this.props.updateLocthunk(this.state.store.singleUser.user.id, coord)
+      this.props.updateLocthunk(this.state.store.singleUser.user.uid, coord)
     } catch (err) {
       console.log(err)
     }
@@ -78,7 +78,7 @@ export class CoordDC extends Component {
           <Text style={styles.welcome}>
             {users.map(user => {
               return (
-                <View key={user.id}>
+                <View key={user.uid}>
                   <Text >{user.email}</Text>
                   <Text>{user.gender}</Text>
                   <Text>His/her longitude: {user.location.coordinates[0]}</Text>
