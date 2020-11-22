@@ -5,16 +5,18 @@ const GOT_USER = 'GOT_USER'
 const REMOVE_USER = "REMOVE-USER"
 const UPDATE_LOCATION = 'UPDATE_LOCATION'
 const ERROR_LOGIN = 'ERROR_LOGIN'
+const RESET_ERROR = 'RESET_ERROR'
 export const gotUser = user => ({ type: GOT_USER, user })
 
 export const remove = () => ({ type: REMOVE_USER })
 
 export const getLocation = user => ({ type: UPDATE_LOCATION, user })
 export const errorLogin = err => ({ type: ERROR_LOGIN, err })
-
+export const resetError = () => ({ type: RESET_ERROR })
 
 export const getUser = (email, password) => async dispatch => {
   let res
+
   try {
     res = await axios.post('https://fitness-buddy-backend.herokuapp.com/auth/login', { email: email, password: password })
     dispatch(gotUser(res.data))
@@ -45,16 +47,18 @@ export const removeUser = () => async dispatch => {
 
 let initalState = {
   user: {},
-  error: false
+  error: null
 }
 export default function (state = initalState, action) {
   switch (action.type) {
     case GOT_USER:
-      return { ...state, user: action.user };
+      return { ...state, user: action.user, error: false };
     case REMOVE_USER:
       return initalState;
     case ERROR_LOGIN:
       return { ...state, error: true }
+    case RESET_ERROR:
+      return { ...state, error: null }
     default:
       return state;
   }
