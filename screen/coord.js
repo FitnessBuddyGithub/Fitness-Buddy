@@ -30,6 +30,8 @@ export class CoordDC extends Component {
   findCoordinates = () => {
     navigator.geolocation.getCurrentPosition(
       position => {
+        console.log('position: ', position)
+
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -58,7 +60,6 @@ export class CoordDC extends Component {
       // console.log('state', state)
       // console.log('props', this.props)
       // console.log('singleuser', this.props.singleUser)
-      console.log ('this.state.sing...: ', this.state.store.singleUser.user.uid)
       this.props.updateLocthunk(this.state.store.singleUser.user.uid, coord)
     } catch (err) {
       console.log(err)
