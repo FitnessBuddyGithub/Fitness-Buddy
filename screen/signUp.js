@@ -8,6 +8,8 @@ import styles from './styles';
 
 function SignUp(props) {
   const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
+
   const [password, setPassword] = useState('');
   // const [confirmPassword, setConfirmPassword] = useState('');
   const [gender, setGender] = useState('female')
@@ -28,7 +30,8 @@ function SignUp(props) {
         let token = await firebaseSDK.auth().currentUser.getIdToken();
         const body = {
           token,
-          gender,
+          // gender,
+          userName,
           email
         };
         console.log('body in signup', body)
@@ -56,7 +59,16 @@ function SignUp(props) {
             autoCapitalize='none'
           />
           <TextInput
-            style={styles.input}
+
+            placeholder='UserName'
+            placeholderTextColor='#aaaaaa'
+            onChangeText={text => setUserName(text)}
+            value={userName}
+            underlineColorAndroid='transparent'
+            autoCapitalize='none'
+          />
+          <TextInput
+
             placeholderTextColor='#aaaaaa'
             secureTextEntry
             placeholder='Password'

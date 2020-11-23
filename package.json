@@ -10,6 +10,7 @@
     "seed": "node script/seed.js"
   },
   "dependencies": {
+    "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^10.0.0",
     "@react-native-picker/picker": "^1.9.2",

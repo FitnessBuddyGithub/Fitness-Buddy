@@ -27,10 +27,19 @@ export default StyleSheet.create({
 		justifyContent: 'center',
 		backgroundColor: '#8688BC'
 	},
+	headline: {
+		marginTop: 10,
+		color: 'white',
+		fontSize: 28,
+		textAlign: 'center',
+		marginBottom: 20,
+		fontWeight: 'bold'
+	},
 	buttonTitle: {
 		color: 'white',
-		fontSize: 16,
-		fontWeight: 'bold'
+		fontSize: 18,
+		fontWeight: 'bold',
+		textAlign: 'center',
 	},
 	footerView: {
 		flex: 1,
