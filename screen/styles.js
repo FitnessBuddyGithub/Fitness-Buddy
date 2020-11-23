@@ -22,6 +22,7 @@ export default StyleSheet.create({
 		marginRight: 30,
 		marginTop: 20,
 		height: 48,
+		padding:10,
 		borderRadius: 5,
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -54,5 +55,13 @@ export default StyleSheet.create({
 		color: '#8688BC',
 		fontWeight: 'bold',
 		fontSize: 16
-	}
+	},
+	headline: {
+		marginTop: 10,
+		color: 'white',
+		fontSize: 26,
+		textAlign: 'center',
+		fontWeight: '500',
+		marginBottom: 20
+	},
 });

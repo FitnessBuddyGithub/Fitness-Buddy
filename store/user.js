@@ -20,8 +20,9 @@ export const getUser = () => async dispatch => {
 
   try {
     const token = await firebaseSvc.auth().currentUser.getIdToken();
+    console.log(token)
     res = await axios.post('https://fitness-buddy-backend.herokuapp.com/auth/login', { token })
-    console.log('in user store', res, res.data)
+    console.log('printing res', res)
     dispatch(gotUser(res.data))
   } catch (err) {
     console.log(err.response)

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, Button, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
 import styles from './styles';
 
-// const image= {uri:"https://cdn4.vectorstock.com/i/1000x1000/61/28/fitness-background-vector-6516128.jpg"}
+const image= {uri:"https://cdn4.vectorstock.com/i/1000x1000/61/28/fitness-background-vector-6516128.jpg"}
 
 const page = StyleSheet.create({
   container: {
@@ -35,7 +35,7 @@ const page = StyleSheet.create({
 export default function HomeScreen({ navigation }) {
   return (
     <View >
-      {/* <ImageBackground source={image} style={page.image} > */}
+      <ImageBackground source={image} style={page.image} >
       <Text style= {styles.headline}>Welcome to Fitness Buddy!</Text>
 
       <TouchableOpacity style={page.button} onPress={() => navigation.navigate('LogIn')} >
@@ -52,7 +52,7 @@ export default function HomeScreen({ navigation }) {
             <Text  style = {styles.buttonTitle} >Sign Up</Text>
           </View>
         </TouchableOpacity>
-        {/* </ImageBackground> */}
+        </ImageBackground>
     </View>
   );
 }

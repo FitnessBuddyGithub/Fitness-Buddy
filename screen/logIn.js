@@ -26,8 +26,8 @@ function LoginScreen(props) {
         props.navigation.navigate('Welcome');
       })
 
-      .catch(() => {
-        alert('Your email or password is incorrect. Please try again!');
+      .catch((error) => {
+        Alert.alert('Your email or password is incorrect. Please try again!');
       });
   };
 
@@ -51,6 +51,7 @@ function LoginScreen(props) {
           placeholder='Password'
           onChangeText={text => setPassword(text)}
           value={password}
+          // textContentType={'oneTimeCode'}
           underlineColorAndroid='transparent'
           autoCapitalize='none'
         />
