@@ -34,9 +34,8 @@ function SignUp(props) {
           userName,
           email
         };
-        console.log('body in signup', body)
         await props.gotUser(body);
-        // props.navigation.navigate('LogIn');
+        props.navigation.navigate('LogIn');
       })
       .catch(() => {
         Alert.alert('Sorry, there was a problem creating an account. Please try again!');
@@ -75,6 +74,7 @@ function SignUp(props) {
             onChangeText={text => setPassword(text)}
             value={password}
             underlineColorAndroid='transparent'
+            textContentType='oneTimeCode'
             autoCapitalize='none'
           />
           {/* <TextInput
@@ -88,9 +88,9 @@ function SignUp(props) {
           /> */}
 
           <TouchableOpacity style={styles.button} onPress={() => onRegisterPress()} >
-            <View>
-              <Text >SIGN UP</Text>
-            </View>
+
+            <Text >SIGN UP</Text>
+
           </TouchableOpacity>
           <View style={styles.footerView}>
             <Text style={styles.footerText}>

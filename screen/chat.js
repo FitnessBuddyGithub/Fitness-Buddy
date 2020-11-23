@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import firebaseSvc from '../FirebaseSvc';
 
 
-class Chat extends React.Component{
+class Chat extends React.Component {
 
   constructor(props) {
     super(props);
@@ -36,6 +36,7 @@ class Chat extends React.Component{
   }
   componentWillUnmount() {
     firebaseSvc.refOff();
+    this.setState({ messages: [] })
   }
 }
 

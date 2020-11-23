@@ -51,7 +51,7 @@ function LoginScreen(props) {
           placeholder='Password'
           onChangeText={text => setPassword(text)}
           value={password}
-          // textContentType={'oneTimeCode'}
+          textContentType='oneTimeCode'
           underlineColorAndroid='transparent'
           autoCapitalize='none'
         />
@@ -62,7 +62,7 @@ function LoginScreen(props) {
         </TouchableOpacity>
 
         <View style={styles.footerView} >
-          <Text  style={styles.footerText} >
+          <Text style={styles.footerText} >
             Don't have an account?{' '}
             <Text onPress={onFooterLinkPress} style={styles.footerLink}>
               Sign up

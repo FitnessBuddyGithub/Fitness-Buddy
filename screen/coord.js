@@ -94,7 +94,6 @@ class CoordDC extends Component {
                     </View>
                   </TouchableOpacity>
                 </View>
-
               )
             })
             }
@@ -113,7 +112,7 @@ class CoordDC extends Component {
 
 const page = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     // justifyContent: 'center',
@@ -155,8 +154,8 @@ const page = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  pad:{
-    borderRadius:50,
+  pad: {
+    borderRadius: 50,
     marginBottom: 100,
   }
 });

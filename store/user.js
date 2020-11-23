@@ -33,7 +33,7 @@ export const getUser = () => async dispatch => {
 export const registerNewUser = user => async dispatch => {
   try {
     const { data } = await axios.post('https://fitness-buddy-backend.herokuapp.com/auth/signup', user);
-    dispatch(gotUser(data));
+    // dispatch(gotUser(data));
   } catch (err) {
     console.log(err.message, err.response);
   }

@@ -1,4 +1,4 @@
-import { Alert, View, Text, Button, StyleSheet, input,TouchableOpacity,Image } from 'react-native';
+import { Alert, View, Text, Button, StyleSheet, input, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { connect } from 'react-redux'
 import { removeUser } from '../store/user'
@@ -16,7 +16,8 @@ function WelcomePage(props) {
             .auth()
             .signOut()
             .then(() => {
-              console.log('You are signed out');
+              Alert.alert('You are signed out');
+              props.navigation.navigate('Home');
             });
         }
       },
@@ -30,17 +31,17 @@ function WelcomePage(props) {
     <View style={page.container}>
       <Text style={page.headline}>Welcome to your fitness budy finder!</Text>
       <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('NearBy')} >
-          <View>
-            <Text style = {styles.buttonTitle} >Find People Nearby</Text>
-          </View>
-        </TouchableOpacity>
+        <View>
+          <Text style={styles.buttonTitle} >Find People Nearby</Text>
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => createLogoutAlert()} >
-          <View>
-            <Text style = {styles.buttonTitle} >Log Out </Text>
-          </View>
-        </TouchableOpacity>
-        <Image style={page.image}
-          source={{uri: 'https://i1.wp.com/fitonapp.com/wp-content/uploads/shutterstock_679609810-1.jpg?resize=1024%2C683&ssl=1'}} />
+        <View>
+          <Text style={styles.buttonTitle} >Log Out </Text>
+        </View>
+      </TouchableOpacity>
+      <Image style={page.image}
+        source={{ uri: 'https://i1.wp.com/fitonapp.com/wp-content/uploads/shutterstock_679609810-1.jpg?resize=1024%2C683&ssl=1' }} />
     </View>
   );
 }
@@ -66,22 +67,22 @@ const mapDispatch = dispatch => {
 const page = StyleSheet.create({
   headline: {
     marginTop: 10,
-		color: '#946DB0',
-		fontSize: 20,
+    color: '#946DB0',
+    fontSize: 20,
     textAlign: 'center',
     marginTop: 30,
-		marginBottom: 20,
-		fontWeight: 'bold'
+    marginBottom: 20,
+    fontWeight: 'bold'
   },
-  container:{
+  container: {
     flex: 1,
-		alignItems: 'center',
+    alignItems: 'center',
     backgroundColor: '#D8E7F5'
   },
   image: {
     width: 350,
     height: 300,
-    marginTop:20
+    marginTop: 20
   },
 })
 
