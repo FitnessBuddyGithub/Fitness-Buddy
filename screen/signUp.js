@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 
 function SignUp(props) {
   const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
+
   const [password, setPassword] = useState('');
   // const [confirmPassword, setConfirmPassword] = useState('');
   const [gender, setGender] = useState('female')
@@ -27,7 +29,8 @@ function SignUp(props) {
         let token = await firebaseSDK.auth().currentUser.getIdToken();
         const body = {
           token,
-          gender,
+          // gender,
+          userName,
           email
         };
         console.log('body in signup', body)
@@ -51,6 +54,15 @@ function SignUp(props) {
             placeholderTextColor='#aaaaaa'
             onChangeText={text => setEmail(text)}
             value={email}
+            underlineColorAndroid='transparent'
+            autoCapitalize='none'
+          />
+          <TextInput
+
+            placeholder='UserName'
+            placeholderTextColor='#aaaaaa'
+            onChangeText={text => setUserName(text)}
+            value={userName}
             underlineColorAndroid='transparent'
             autoCapitalize='none'
           />

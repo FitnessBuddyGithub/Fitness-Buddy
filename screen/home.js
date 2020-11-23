@@ -21,7 +21,7 @@ export default function Home() {
           component={HomeScreen}
         />
         <Stack.Screen
-          name="Coord"
+          name="NearBy"
           component={Coord}
         />
         <Stack.Screen

@@ -31,7 +31,7 @@ function WelcomePage(props) {
       <Text>Welcome!</Text>
       <Button
         title="Find People Nearby"
-        onPress={() => props.navigation.navigate('Coord')}
+        onPress={() => props.navigation.navigate('NearBy')}
       />
       <Button
         title="Log Out"
